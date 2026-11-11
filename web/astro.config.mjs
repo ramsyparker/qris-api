@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
 import starlight from '@astrojs/starlight';
 
@@ -23,6 +24,7 @@ export default defineConfig({
     }),
   ],
   vite: {
+    plugins: [tailwindcss()],
     server: {
       proxy: {
         '/convert': 'http://localhost:3000',
