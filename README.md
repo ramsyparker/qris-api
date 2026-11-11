@@ -5,7 +5,7 @@ API konversi QRIS berbasis Elysia.js dengan dokumentasi OpenAPI (Swagger) dan UI
 ## Fitur
 
 - Endpoint `POST /convert` untuk mengonversi string QRIS dan menghitung CRC16.
-- Dokumentasi OpenAPI/Swagger tersedia di `GET /docs`.
+- Dokumentasi OpenAPI/Swagger tersedia di `GET /api-reference`.
 - UI sederhana untuk mencoba API tersedia di `GET /ui`.
 
 ## Prasyarat
@@ -61,8 +61,20 @@ bun src/app.ts
 
 Server akan berjalan pada `http://localhost:3000` (atau sesuai `PORT`).
 
-- Dokumentasi: `http://localhost:3000/docs`
+- Referensi OpenAPI: `http://localhost:3000/api-reference`
 - UI Sederhana: `http://localhost:3000/ui`
+
+## Web (marketing, docs, dan playground)
+
+Frontend berada di folder `web/` dan menggunakan Astro, Starlight, serta React untuk komponen interaktif.
+
+```bash
+cd web
+bun install
+bun run dev
+```
+
+Jalankan API di port `3000` agar playground bisa memanggil endpoint lokal. Halaman frontend tersedia di `/` (landing), `/docs/` (panduan), dan `/app/` (playground).
 
 ## OpenAPI Schema
 
@@ -107,6 +119,6 @@ Keterangan:
 
 ## Catatan
 
-- Endpoint dokumentasi Swagger berada di `/docs` dengan plugin `@elysiajs/swagger`.
+- Referensi API interaktif tersedia di `/api-reference` dengan plugin `@elysiajs/swagger`.
 - UI sederhana di `/ui` tidak membutuhkan dependensi tambahan.
 - Pastikan data QRIS valid sebelum dikonversi; saat ini validasi detail belum diimplementasikan.

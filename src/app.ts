@@ -29,7 +29,7 @@ app.use(
                 { name: 'QRIS', description: 'Operasi konversi QRIS' }
             ]
         },
-        path: '/docs'
+        path: '/api-reference'
     })
 );
 
@@ -221,7 +221,7 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`QRIS API is running on http://localhost:${PORT}`);
-    console.log(`Docs: http://localhost:${PORT}/docs`);
+    console.log(`API reference: http://localhost:${PORT}/api-reference`);
     console.log(`UI:   http://localhost:${PORT}/ui`);
 });
 // Simple in-memory rate limiter: 10 requests per second per IP for selected paths
