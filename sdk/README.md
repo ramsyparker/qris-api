@@ -27,7 +27,7 @@ Browser calls require the API server to allow cross-origin requests. This API en
 ```ts
 import { QrisApi } from '@aaramsyy/qris-api';
 
-const qris = new QrisApi(); // Defaults to https://qris.fixorastudio.com
+const qris = new QrisApi(); // Defaults to https://api-qris.fixorastudio.com
 
 const converted = await qris.convert({
   qris: '000201...',

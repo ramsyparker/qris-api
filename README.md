@@ -59,7 +59,7 @@ Dengan Bun:
 bun src/app.ts
 ```
 
-Server API publik: `https://qris.fixorastudio.com`. Untuk pengembangan lokal, server berjalan pada `http://localhost:3000` (atau sesuai `PORT`).
+Server API publik: `https://api-qris.fixorastudio.com`. Untuk pengembangan lokal, server berjalan pada `http://localhost:3000` (atau sesuai `PORT`).
 
 - Referensi OpenAPI: `http://localhost:3000/api-reference`
 - UI Sederhana: `http://localhost:3000/ui`
@@ -74,7 +74,7 @@ bun install
 bun run dev
 ```
 
-Jalankan API di port `3000` agar playground bisa memanggil endpoint lokal. Halaman frontend tersedia di `/` (landing), `/docs/` (panduan), dan `/app/` (playground). SDK memakai `https://qris.fixorastudio.com` secara default; set `baseUrl` untuk memakai server lokal.
+Jalankan API di port `3000` agar playground bisa memanggil endpoint lokal. Halaman web tersedia di `https://qris.fixorastudio.com/` (landing), `/docs/` (panduan), dan `/app/` (playground). SDK memakai `https://api-qris.fixorastudio.com` secara default; set `baseUrl` untuk memakai server lokal.
 
 ## JavaScript SDK
 

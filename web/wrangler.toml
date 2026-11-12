@@ -1,7 +1,8 @@
 name = "qris-api-web"
 main = "src/worker.ts"
 compatibility_date = "2026-11-12"
-workers_dev = true
+workers_dev = false
+routes = [{ pattern = "qris.fixorastudio.com", custom_domain = true }]
 
 [assets]
 directory = "./dist"
@@ -11,4 +12,4 @@ html_handling = "auto-trailing-slash"
 run_worker_first = ["/convert", "/decode", "/qr", "/api-reference", "/api-reference/*"]
 
 [vars]
-API_ORIGIN = "https://qris.fixorastudio.com"
+API_ORIGIN = "https://api-qris.fixorastudio.com"
