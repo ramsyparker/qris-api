@@ -127,17 +127,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .theme-icon-moon { display: none; }
 .dark .theme-icon-sun { display: none; }
 .dark .theme-icon-moon { display: block; }
-/* Keep the touch target independent of the icon's optical size. */
-.docs-site [data-theme-toggle] { height: auto; padding: 3px; border-radius: 14px; }
-.docs-site [data-theme-toggle] > button { display: inline-grid; width: 44px; height: 44px; padding: 0; place-items: center; border-radius: 10px; }
-.docs-site [data-theme-toggle] > button > svg { width: 18px; height: 18px; fill: none; stroke-width: 1.8; }
-.docs-site button:is([aria-label="Open Search"], [aria-label="Open Sidebar"]) { width: 44px; height: 44px; border-radius: 10px; }
-.docs-site button:is([aria-label="Open Search"], [aria-label="Open Sidebar"]) svg { width: 18px; height: 18px; stroke-width: 1.8; }
-.docs-site [aria-label="GitHub"] svg { width: 18px; height: 18px; }
+.docs-panel { --action-size: 2rem; --icon-size: 1.125rem; }
+.docs-panel-actions { display: contents; }
+.docs-panel-actions > :is(a, button), .docs-theme-switch button { display: inline-grid; flex: none; width: var(--action-size); height: var(--action-size); padding: 0; place-items: center; border-radius: 8px; }
+.docs-panel-actions > :is(a, button) svg, .docs-theme-switch button svg { width: var(--icon-size); height: var(--icon-size); stroke-width: 1.8; }
 .docs-site .lucide-languages { width: 18px; height: 18px; stroke-width: 1.8; }
-.docs-theme-switch { display: flex; flex: 0 0 auto; gap: 2px; margin-inline-start: 4px; padding: 3px; border: 1px solid var(--border); border-radius: 11px; background: var(--card); }
-.docs-theme-switch button { display: inline-grid; width: 32px; height: 32px; padding: 0; place-items: center; border: 0; border-radius: 8px; background: transparent; color: var(--muted-foreground); cursor: pointer; transition: background-color 150ms ease, color 150ms ease; }
-.docs-theme-switch button svg { width: 16px; height: 16px; stroke-width: 1.8; }
+.docs-theme-switch { display: flex; flex: none; margin-inline-start: 4px; padding: 2px; border: 1px solid var(--border); border-radius: 11px; background: var(--card); }
+.docs-theme-switch button { border: 0; background: transparent; color: var(--muted-foreground); cursor: pointer; transition: background-color 150ms ease, color 150ms ease; }
+.docs-language-code { display: none; text-decoration: none; }
+@media (max-width: 22rem) { .docs-panel .docs-language-name { display: none; } .docs-panel .docs-language-code { display: inline; } }
+@media (max-width: 24rem) { .docs-panel .docs-language-prefix { display: none; } }
 .docs-theme-switch button[aria-pressed="true"] { background: var(--muted); color: var(--foreground); }
 @media (hover: hover) and (pointer: fine) {
   .docs-theme-switch button:hover { background: var(--muted); color: var(--foreground); }

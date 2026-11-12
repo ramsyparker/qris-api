@@ -2,7 +2,7 @@ import { navigate } from 'astro:transitions/client';
 import { RootProvider } from 'fumadocs-ui/provider/astro';
 import { useFumadocsLoader, type SerializedPageTree } from 'fumadocs-core/source/client';
 import type { TOCItemType } from 'fumadocs-core/toc';
-import { DocsLayout } from 'fumadocs-ui/layouts/flux';
+import { DocsLayout, NavigationPanel } from 'fumadocs-ui/layouts/flux';
 import {
   Sidebar,
   SidebarProvider,
@@ -82,10 +82,18 @@ export function DocsIsland({
           tree={data.tree}
           themeSwitch={{ enabled: true, mode: 'light-dark' }}
           nav={{ title: 'QRIS API', url: '/' }}
+          renderNavigationPanel={(panel) => (
+            <NavigationPanel
+              {...panel}
+              className="docs-panel"
+              tool={<div className="docs-panel-actions">{panel.tool}</div>}
+              link={<div className="docs-panel-actions">{panel.link}</div>}
+            />
+          )}
           githubUrl="https://github.com/ramsyparker/qris-api"
           slots={{ sidebar: sharedSidebarSlots, themeSwitch: ThemeControls }}
           tabs={[
-            { title: 'Bahasa Indonesia', description: 'Dokumentasi bahasa Indonesia', url: idUrl, icon: <Languages aria-hidden="true" /> },
+            { title: <span lang="id"><span className="docs-language-name"><span className="docs-language-prefix">Bahasa </span>Indonesia</span><abbr className="docs-language-code" title="Bahasa Indonesia">ID</abbr></span>, description: 'Dokumentasi bahasa Indonesia', url: idUrl, icon: <Languages aria-hidden="true" /> },
             { title: 'English', description: 'Documentation in English', url: enUrl, icon: <Languages aria-hidden="true" /> },
           ]}
           links={[
