@@ -1,0 +1,36 @@
+---
+title: Instalasi
+description: Pasang SDK dan periksa persyaratan runtime.
+---
+
+# Instalasi
+
+Pasang paket `@aaramsyy/qris-api` dengan pengelola paket yang kamu gunakan.
+
+<CodeBlockCommand
+  npm="npm install @aaramsyy/qris-api"
+  pnpm="pnpm add @aaramsyy/qris-api"
+  yarn="yarn add @aaramsyy/qris-api"
+  bun="bun add @aaramsyy/qris-api"
+/>
+
+## Persyaratan
+
+- Node.js 18 atau lebih baru, Bun, atau browser modern.
+- Proyek menggunakan ESM atau bundler yang mendukung ESM.
+- Untuk penggunaan di browser, server API mengizinkan origin aplikasi melalui CORS.
+
+<Callout type="warn">
+Paket ini menyediakan ESM. Gunakan `import`; CommonJS `require()` tidak didukung.
+</Callout>
+
+## Verifikasi instalasi
+
+```ts
+import { QrisApi } from '@aaramsyy/qris-api';
+
+const client = new QrisApi();
+console.log(await client.qr({ text: 'contoh' }));
+```
+
+Jika berhasil, `qr()` mengembalikan `Blob` gambar PNG. Untuk menampilkannya di browser, lihat [membuat gambar QR](/docs/api/qr).

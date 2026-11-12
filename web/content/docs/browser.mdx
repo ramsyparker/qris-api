@@ -1,0 +1,41 @@
+---
+title: Integrasi browser
+description: Gunakan SDK di browser dan siapkan akses CORS.
+---
+
+# Integrasi browser
+
+Gunakan SDK di aplikasi browser yang mendukung ESM. Server API publik mengizinkan permintaan lintas origin tanpa cookie.
+
+```ts
+import { QrisApi, QrisApiError } from '@aaramsyy/qris-api';
+
+const api = new QrisApi();
+
+try {
+  const result = await api.convert({ qris, nominal });
+  output.textContent = result.qris;
+} catch (error) {
+  if (error instanceof QrisApiError) {
+    output.textContent = `${error.status}: ${error.message}`;
+  }
+}
+```
+
+## Baca QR dari gambar
+
+```ts
+const image = imageInput.files?.[0];
+if (!image) throw new Error('Pilih file gambar.');
+
+const { text } = await api.decode(image, image.name);
+console.log(text);
+```
+
+## Server API sendiri
+
+Jika server API berada di domain lain, konfigurasi CORS agar mengizinkan origin aplikasi. Konfigurasi server dalam repositori ini tidak menggunakan kredensial CORS.
+
+<Callout type="info">
+Browser menerapkan aturan CORS; Node.js dan Bun tidak. Jika browser memblokir permintaan, periksa konfigurasi CORS di server API.
+</Callout>

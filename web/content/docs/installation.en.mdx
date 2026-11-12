@@ -1,0 +1,31 @@
+---
+title: Installation
+description: Install the SDK and check runtime requirements.
+---
+
+# Installation
+
+Install `@aaramsyy/qris-api` with your package manager.
+
+<CodeBlockCommand npm="npm install @aaramsyy/qris-api" pnpm="pnpm add @aaramsyy/qris-api" yarn="yarn add @aaramsyy/qris-api" bun="bun add @aaramsyy/qris-api" />
+
+## Requirements
+
+- Node.js 18 or later, Bun, or a modern browser.
+- An ESM project or a bundler that supports ESM.
+- For browser use, an API server that allows your application's origin through CORS.
+
+<Callout type="warn">
+This package provides ESM. Use `import`; CommonJS `require()` is unsupported.
+</Callout>
+
+## Verify the installation
+
+```ts
+import { QrisApi } from '@aaramsyy/qris-api';
+
+const api = new QrisApi();
+console.log(await api.qr({ text: 'example' }));
+```
+
+On success, `qr()` returns a PNG image as a `Blob`. See [generate a QR image](/en/docs/api/qr) to display it in a browser.

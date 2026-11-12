@@ -1,0 +1,13 @@
+{
+  "title": "Panduan",
+  "pages": [
+    "index",
+    "installation",
+    "quickstart",
+    "configuration",
+    "api",
+    "browser",
+    "errors",
+    "rest-api"
+  ]
+}

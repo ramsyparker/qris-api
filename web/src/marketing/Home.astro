@@ -1,0 +1,102 @@
+---
+import { ArrowRight, BookOpenText, Check, Braces, Zap } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { LinkButton } from '@/components/LinkButton';
+import { FeatureGrid } from '@/components/FeatureGrid';
+import SiteHeader from '@/components/SiteHeader.astro';
+import '../styles/global.css';
+---
+
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="API QRIS untuk konversi nominal, decode gambar, dan pembuatan QR code." />
+    <meta name="theme-color" content="#f7f6f2" />
+    <title>QRIS API — Integrasi QRIS lebih sederhana</title>
+  </head>
+  <body>
+    <SiteHeader />
+    <main>
+      <section class="hero-section page-container" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <Badge variant="secondary" className="hero-badge">
+            <span class="badge-dot" aria-hidden="true"></span>
+            API QRIS untuk developer
+          </Badge>
+          <h1 id="hero-title">QRIS dinamis,<br /><span>tanpa kerumitan.</span></h1>
+          <p class="hero-description">
+            Satu API untuk mengonversi nominal, membaca QR dari gambar, dan menghasilkan QR code —
+            siap dihubungkan ke produkmu.
+          </p>
+          <div class="hero-actions">
+            <LinkButton href="/app/" size="lg" className="hero-primary">
+              Coba playground <ArrowRight aria-hidden="true" />
+            </LinkButton>
+            <LinkButton href="/docs/" variant="outline" size="lg" className="hero-secondary">
+              Baca dokumentasi
+            </LinkButton>
+          </div>
+          <div class="hero-trust" aria-label="Tentang QRIS API">
+            <span><Braces aria-hidden="true" /> REST API</span>
+            <span><Zap aria-hidden="true" /> Open source</span>
+            <span><BookOpenText aria-hidden="true" /> Referensi OpenAPI</span>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Contoh request dan response API">
+          <div class="code-window">
+            <div class="code-window-top">
+              <div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+              <span class="window-label">Contoh request</span>
+              <span class="window-method">POST</span>
+            </div>
+            <div class="code-path"><span>/convert</span><span class="code-status"><Check aria-hidden="true" /> 200 OK</span></div>
+            <pre class="code-block"><code><span class="code-muted">&#123;</span>
+  <span class="code-key">"qris"</span>: <span class="code-string">"000201..."</span>,
+  <span class="code-key">"nominal"</span>: <span class="code-string">"25000"</span>
+<span class="code-muted">&#125;</span></code></pre>
+            <div class="response-label"><span>RESPONSE</span><span>application/json</span></div>
+            <pre class="code-block response-block"><code><span class="code-muted">&#123;</span>
+  <span class="code-key">"merchantName"</span>: <span class="code-string">"Kedai Kopi"</span>,
+  <span class="code-key">"nominal"</span>: <span class="code-string">"25000"</span>,
+  <span class="code-key">"qris"</span>: <span class="code-string">"000201..."</span>
+<span class="code-muted">&#125;</span></code></pre>
+            <div class="code-window-bottom"><span class="status-indicator"></span> Siap dipakai di aplikasi</div>
+          </div>
+          <div class="visual-note"><span class="visual-note-icon"><Check aria-hidden="true" /></span><span>Payload ringkas.<br /><strong>Alur pembayaran tetap milikmu.</strong></span></div>
+        </div>
+      </section>
+
+      <section class="features-section page-container" aria-labelledby="features-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-eyebrow">Yang bisa kamu lakukan</p>
+            <h2 id="features-title">Bagian QRIS yang rumit,<br /><span>dibuat lebih sederhana.</span></h2>
+          </div>
+          <p class="section-description">Mulai dari satu endpoint. Tambahkan kemampuan sesuai kebutuhan produkmu.</p>
+        </div>
+        <FeatureGrid />
+      </section>
+
+      <section class="closing-section page-container" aria-labelledby="closing-title">
+        <div class="closing-panel">
+          <div>
+            <p class="section-eyebrow">Mulai integrasi</p>
+            <h2 id="closing-title">Coba dulu. Integrasikan saat siap.</h2>
+            <p>Jelajahi endpoint lewat playground, lalu lanjutkan dengan panduan integrasi.</p>
+          </div>
+          <div class="closing-actions">
+            <LinkButton href="/app/" size="lg" className="closing-primary">Buka playground <ArrowRight aria-hidden="true" /></LinkButton>
+            <LinkButton href="/docs/" variant="outline" size="lg" className="closing-secondary">Dokumentasi</LinkButton>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer page-container">
+      <a class="footer-brand" href="/">QRIS API</a>
+      <span>API terbuka untuk integrasi QRIS.</span>
+      <a href="https://github.com/ramsyparker/qris-api" target="_blank" rel="noreferrer">Lihat di GitHub <ArrowRight aria-hidden="true" /></a>
+    </footer>
+  </body>
+</html>

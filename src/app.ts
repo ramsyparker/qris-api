@@ -1,4 +1,5 @@
 import { Elysia, t } from 'elysia';
+import { cors } from '@elysia/cors';
 import { swagger } from '@elysiajs/swagger';
 import QRCode from 'qrcode';
 import { Jimp } from 'jimp';
@@ -11,6 +12,13 @@ import { join } from 'path';
 import { redisRateLimit } from './utils/redis.util';
 
 const app = new Elysia();
+
+app.use(cors({
+    origin: true,
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type'],
+    credentials: false
+}));
 
 
 const qrisController = new QrisController();
@@ -29,7 +37,7 @@ app.use(
                 { name: 'QRIS', description: 'Operasi konversi QRIS' }
             ]
         },
-        path: '/docs'
+        path: '/api-reference'
     })
 );
 
@@ -179,7 +187,7 @@ app.get('/qr', async ({ query }) => {
     }
     try {
         const pngBuffer = await QRCode.toBuffer(content, { type: 'png', errorCorrectionLevel: 'M' });
-        return new Response(pngBuffer, { headers: { 'content-type': 'image/png' } });
+        return new Response(new Uint8Array(pngBuffer), { headers: { 'content-type': 'image/png' } });
     } catch (e: any) {
         return new Response(JSON.stringify({ error: e?.message || 'Gagal membuat QR' }), {
             status: 500,
@@ -221,7 +229,7 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`QRIS API is running on http://localhost:${PORT}`);
-    console.log(`Docs: http://localhost:${PORT}/docs`);
+    console.log(`API reference: http://localhost:${PORT}/api-reference`);
     console.log(`UI:   http://localhost:${PORT}/ui`);
 });
 // Simple in-memory rate limiter: 10 requests per second per IP for selected paths

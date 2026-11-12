@@ -1,0 +1,50 @@
+---
+title: Quickstart
+description: Install the SDK, convert a QRIS payload, and handle errors.
+---
+
+# Quickstart
+
+Run these examples in Node.js 18+, Bun, or a browser app with a bundler. The SDK uses the public API server by default.
+
+## 1. Install the package
+
+<CodeBlockCommand npm="npm install @aaramsyy/qris-api" pnpm="pnpm add @aaramsyy/qris-api" yarn="yarn add @aaramsyy/qris-api" bun="bun add @aaramsyy/qris-api" />
+
+## 2. Convert a QRIS payload
+
+```ts
+import { QrisApi } from '@aaramsyy/qris-api';
+
+const api = new QrisApi();
+const result = await api.convert({
+  qris: '<VALID_QRIS>',
+  nominal: '10000',
+});
+
+console.log(result.qris);
+console.log(result.nominal);
+console.log(result.merchantName);
+```
+
+Replace `<VALID_QRIS>` with a valid QRIS payload. Set `nominal` to a string of 1–13 digits without thousands separators.
+
+## 3. Handle failures
+
+```ts
+import { QrisApi, QrisApiError } from '@aaramsyy/qris-api';
+
+const api = new QrisApi();
+try {
+  const result = await api.convert({ qris: '<VALID_QRIS>', nominal: '10000' });
+  console.log(result.qris);
+} catch (error) {
+  if (error instanceof QrisApiError) {
+    console.error(error.status, error.message, error.body);
+  } else {
+    console.error('The request failed before an API response arrived.', error);
+  }
+}
+```
+
+See [convert QRIS](/en/docs/api/convert) for input and output details, or use the [REST API](/en/docs/rest-api) without the SDK.

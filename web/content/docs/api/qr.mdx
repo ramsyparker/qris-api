@@ -1,0 +1,42 @@
+---
+title: qr
+description: Buat gambar PNG dari teks atau payload QRIS.
+---
+
+# `qr()`
+
+Metode `qr()` memanggil `GET /qr` dan mengembalikan gambar PNG sebagai `Blob`.
+
+## Dari teks
+
+```ts
+const image = await api.qr({ text: 'teks yang akan dijadikan QR' });
+```
+
+## Dari QRIS dan nominal baru
+
+```ts
+const image = await api.qr({
+  qris: '<QRIS_VALID>',
+  nominal: '10000',
+});
+```
+
+## Tampilkan di browser
+
+```ts
+const image = await api.qr({ text: 'contoh QRIS' });
+const objectUrl = URL.createObjectURL(image);
+imageElement.src = objectUrl;
+
+// Panggil saat gambar tidak lagi diperlukan.
+URL.revokeObjectURL(objectUrl);
+```
+
+### Signature
+
+```ts
+qr(input: { text: string } | { qris: string; nominal: string }): Promise<Blob>
+```
+
+Jika server mengembalikan status HTTP gagal, `qr()` melempar `QrisApiError`. Input yang tidak memenuhi syarat SDK menghasilkan `TypeError` sebelum permintaan dikirim.

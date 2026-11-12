@@ -1,0 +1,41 @@
+---
+title: qr
+description: Generate a PNG image from text or a QRIS payload.
+---
+
+# `qr()`
+
+`qr()` calls `GET /qr` and returns the PNG image as a `Blob`.
+
+## From text
+
+```ts
+const image = await api.qr({ text: 'text to encode' });
+```
+
+## From QRIS with a new amount
+
+```ts
+const image = await api.qr({ qris: '<VALID_QRIS>', nominal: '10000' });
+```
+
+Replace `<VALID_QRIS>` with a valid QRIS payload.
+
+## Display in a browser
+
+```ts
+const image = await api.qr({ text: 'example' });
+const objectUrl = URL.createObjectURL(image);
+imageElement.src = objectUrl;
+
+// Call this when the image is no longer needed.
+URL.revokeObjectURL(objectUrl);
+```
+
+### Signature
+
+```ts
+qr(input: { text: string } | { qris: string; nominal: string }): Promise<Blob>
+```
+
+If the server returns a failed HTTP status, `qr()` throws `QrisApiError`. Invalid SDK input causes a `TypeError` before a request is sent.

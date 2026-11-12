@@ -1,0 +1,43 @@
+---
+title: Konfigurasi
+description: Atur alamat server API dan implementasi fetch.
+---
+
+# Konfigurasi
+
+## Alamat server API
+
+Secara default, SDK mengirim permintaan ke `https://qris.fixorastudio.com`.
+
+```ts
+import { QrisApi } from '@aaramsyy/qris-api';
+
+const api = new QrisApi({
+  baseUrl: 'https://qr.example.com',
+});
+```
+
+Untuk pengembangan lokal:
+
+```ts
+const api = new QrisApi({ baseUrl: 'http://localhost:3000' });
+```
+
+Isi `baseUrl` dengan URL absolut. SDK menghapus garis miring di akhir URL jika ada.
+
+## Implementasi fetch sendiri
+
+Gunakan opsi `fetch` jika runtime menyediakan implementasi Fetch API sendiri:
+
+```ts
+const api = new QrisApi({
+  baseUrl: 'https://qr.example.com',
+  fetch: customFetch,
+});
+```
+
+Fungsi tersebut harus menerima URL dan `RequestInit`, lalu mengembalikan `Promise<Response>`.
+
+## Runtime
+
+SDK membutuhkan `fetch`, `Blob`, dan `FormData`. Gunakan Node.js 18+, Bun, atau browser modern. Untuk penggunaan di browser, server API harus mengizinkan origin aplikasi melalui CORS.

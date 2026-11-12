@@ -1,0 +1,35 @@
+---
+title: Penanganan error
+description: Bedakan input tidak valid, respons HTTP gagal, dan gangguan jaringan.
+---
+
+# Penanganan error
+
+SDK melempar `QrisApiError` saat server mengembalikan status HTTP gagal. Objek ini memuat `status`, `message`, dan `body` respons. Input yang tidak memenuhi syarat SDK menghasilkan `TypeError`; gangguan jaringan menghasilkan error dari `fetch`.
+
+```ts
+import { QrisApiError } from '@aaramsyy/qris-api';
+
+try {
+  await api.convert({ qris: '<QRIS_VALID>', nominal: '10000' });
+} catch (error) {
+  if (error instanceof QrisApiError) {
+    console.error('Status:', error.status);
+    console.error('Pesan:', error.message);
+    console.error('Respons:', error.body);
+  } else {
+    // Contoh: DNS, koneksi internet, atau permintaan diblokir oleh CORS.
+    console.error('Tidak menerima respons dari API.', error);
+  }
+}
+```
+
+## Status yang umum
+
+| Status | Arti |
+| --- | --- |
+| `400` | Periksa format input, validitas payload QRIS, atau kejelasan gambar QR. |
+| `429` | Batas permintaan tercapai. Kurangi frekuensi permintaan sebelum mencoba lagi. |
+| `500` | Server gagal memproses permintaan. Coba lagi; jika berulang, periksa log server. |
+
+SDK memeriksa tipe dan format dasar sebelum mengirim permintaan. Server memvalidasi isi payload QRIS dan CRC.

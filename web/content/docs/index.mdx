@@ -1,0 +1,47 @@
+---
+title: Pengantar
+description: Kenali fitur QRIS API dan pilih cara integrasi yang sesuai.
+---
+
+# QRIS API
+
+QRIS API mengubah nominal pada payload QRIS, membaca kode QR dari gambar, dan membuat gambar QR. SDK JavaScript/TypeScript `@aaramsyy/qris-api` menyediakan metode untuk ketiga operasi tersebut.
+
+```ts
+import { QrisApi } from '@aaramsyy/qris-api';
+
+const qris = new QrisApi();
+const result = await qris.convert({
+  qris: '<QRIS_VALID>',
+  nominal: '10000',
+});
+
+console.log(result.qris);
+console.log(result.merchantName);
+```
+
+<Callout type="info">
+SDK menggunakan `https://qris.fixorastudio.com` secara default. Untuk server sendiri, atur opsi [`baseUrl`](/docs/configuration).
+</Callout>
+
+## Pilih cara integrasi
+
+| Kebutuhan | Mulai dari |
+| --- | --- |
+| Memasang SDK | [Instalasi](/docs/installation) |
+| Mengirim permintaan pertama | [Mulai cepat](/docs/quickstart) |
+| Mengonversi nominal QRIS | [convert](/docs/api/convert) |
+| Membaca QRIS dari gambar | [decode](/docs/api/decode) |
+| Menghasilkan gambar QR | [qr](/docs/api/qr) |
+| Memanggil endpoint tanpa SDK | [API REST](/docs/rest-api) |
+
+## Fitur
+
+- **Konversi** — memperbarui nominal transaksi dan CRC16 pada payload QRIS.
+- **Baca gambar** — mengambil teks kode QR dari file gambar.
+- **Buat gambar** — menghasilkan PNG sebagai `Blob`.
+- **Tipe TypeScript** — menyediakan tipe untuk input dan hasil SDK.
+
+## Selanjutnya
+
+Pasang SDK melalui [panduan instalasi](/docs/installation), lalu ikuti [mulai cepat](/docs/quickstart) untuk mengirim permintaan pertama. Ganti `<QRIS_VALID>` dalam contoh dengan payload QRIS milikmu yang valid.
