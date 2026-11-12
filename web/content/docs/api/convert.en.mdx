@@ -1,0 +1,42 @@
+---
+title: convert
+description: Update the transaction amount in a QRIS payload.
+---
+
+# `convert()`
+
+`convert()` sends a QRIS payload and an amount to `POST /convert`. The server validates the payload, updates the amount, and recalculates CRC16. Replace `<VALID_QRIS>` below with a valid payload.
+
+## SDK usage
+
+```ts
+const result = await api.convert({ qris: '<VALID_QRIS>', nominal: '10000' });
+console.log(result.qris);
+```
+
+### Input
+
+| Property | Type | Requirement |
+| --- | --- | --- |
+| `qris` | `string` | A valid QRIS payload. |
+| `nominal` | `string` | 1–13 digits without thousands separators. |
+
+### Result
+
+```ts
+interface ConvertResult {
+  qris: string;
+  nominal: string;
+  merchantName: string;
+}
+```
+
+## Direct HTTP request
+
+```bash
+curl -X POST https://qris.fixorastudio.com/convert \
+  -H 'Content-Type: application/json' \
+  -d '{"qris":"<VALID_QRIS>","nominal":"10000"}'
+```
+
+A successful response contains the converted QRIS payload, amount, and merchant name. Invalid input returns HTTP `400` with `{ "error": "..." }`.

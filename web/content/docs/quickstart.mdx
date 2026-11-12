@@ -1,0 +1,57 @@
+---
+title: Mulai cepat
+description: Pasang SDK, konversi QRIS, dan tangani respons gagal.
+---
+
+# Mulai cepat
+
+Contoh berikut dapat dijalankan di Node.js 18+, Bun, atau aplikasi browser dengan bundler. SDK menggunakan server API publik secara default.
+
+## 1. Pasang paket
+
+<CodeBlockCommand
+  npm="npm install @aaramsyy/qris-api"
+  pnpm="pnpm add @aaramsyy/qris-api"
+  yarn="yarn add @aaramsyy/qris-api"
+  bun="bun add @aaramsyy/qris-api"
+/>
+
+## 2. Konversi QRIS
+
+```ts
+import { QrisApi } from '@aaramsyy/qris-api';
+
+const api = new QrisApi();
+
+const result = await api.convert({
+  qris: '<QRIS_VALID>',
+  nominal: '10000',
+});
+
+console.log(result.qris);
+console.log(result.nominal);
+console.log(result.merchantName);
+```
+
+Ganti `<QRIS_VALID>` dengan payload QRIS yang valid sebelum menjalankan contoh. Isi `nominal` dengan string berisi 1–13 digit angka, tanpa pemisah ribuan.
+
+## 3. Tangani kegagalan
+
+```ts
+import { QrisApi, QrisApiError } from '@aaramsyy/qris-api';
+
+const api = new QrisApi();
+
+try {
+  const result = await api.convert({ qris: '<QRIS_VALID>', nominal: '10000' });
+  console.log(result.qris);
+} catch (error) {
+  if (error instanceof QrisApiError) {
+    console.error(error.status, error.message, error.body);
+  } else {
+    console.error('Permintaan gagal sebelum menerima respons dari API.', error);
+  }
+}
+```
+
+Lihat [konversi QRIS](/docs/api/convert) untuk rincian input dan hasil, atau gunakan [API REST](/docs/rest-api) untuk memanggil endpoint tanpa SDK.

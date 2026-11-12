@@ -1,0 +1,46 @@
+---
+title: convert
+description: Perbarui nominal transaksi dalam payload QRIS.
+---
+
+# `convert()`
+
+Metode `convert()` mengirim payload QRIS dan nominal ke `POST /convert`. Server memvalidasi payload, memperbarui nominal, lalu menghitung CRC16. Ganti `<QRIS_VALID>` dalam contoh dengan payload QRIS yang valid.
+
+## Penggunaan SDK
+
+```ts
+const result = await api.convert({
+  qris: '<QRIS_VALID>',
+  nominal: '10000',
+});
+
+console.log(result.qris);
+```
+
+### Input
+
+| Properti | Tipe | Ketentuan |
+| --- | --- | --- |
+| `qris` | `string` | Payload QRIS yang valid. |
+| `nominal` | `string` | 1–13 digit angka, tanpa pemisah ribuan. |
+
+### Hasil
+
+```ts
+interface ConvertResult {
+  qris: string;
+  nominal: string;
+  merchantName: string;
+}
+```
+
+## HTTP langsung
+
+```bash
+curl -X POST https://qris.fixorastudio.com/convert \
+  -H 'Content-Type: application/json' \
+  -d '{"qris":"<QRIS_VALID>","nominal":"10000"}'
+```
+
+Respons berhasil berisi payload QRIS hasil konversi, nominal, dan nama merchant. Input yang tidak valid menghasilkan HTTP `400` dengan objek `{ "error": "..." }`.

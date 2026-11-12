@@ -1,28 +1,22 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
-import react from '@astrojs/react';
-import starlight from '@astrojs/starlight';
+import fumadocs from '@fumadocs/astro';
+import { normalizeCodeBlocks } from './src/lib/normalize-code-blocks.mjs';
 
 export default defineConfig({
-  site: 'https://qr.ireng.uk',
-  integrations: [
-    react(),
-    starlight({
-      title: 'QRIS API',
-      description: 'Panduan integrasi QRIS API.',
-      locales: {
-        root: { label: 'Indonesia', lang: 'id' },
-      },
-      sidebar: [
-        {
-          label: 'Dokumentasi',
-          items: [
-            { label: 'Mulai', slug: 'docs' },
-          ],
+  site: 'https://qris.fixorastudio.com',
+  integrations: [fumadocs({
+    components: './src/components/mdx.tsx',
+    hastPlugins: (plugins) => [normalizeCodeBlocks(), ...plugins],
+    rehypeCodeOptions: {
+      transformers: [{
+        name: 'docs-code-language',
+        pre(node) {
+          node.properties['data-language'] = this.options.lang;
         },
-      ],
-    }),
-  ],
+      }],
+    },
+  })],
   vite: {
     plugins: [tailwindcss()],
     server: {

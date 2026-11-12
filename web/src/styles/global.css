@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
@@ -29,6 +31,8 @@
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) * 1.4);
+  --color-code: var(--code);
+  --color-code-foreground: var(--code-foreground);
 }
 
 :root {
@@ -53,8 +57,34 @@
   --destructive: oklch(0.55 0.19 28);
   --border: oklch(0.89 0.012 86);
   --input: oklch(0.89 0.012 86);
-  --ring: oklch(0.68 0.015 75);
+  --ring: oklch(0.48 0.015 75);
   --radius: 0.75rem;
+  --code: oklch(0.985 0 0);
+  --code-foreground: oklch(0.141 0.005 285.823);
+}
+
+.dark {
+  color-scheme: dark;
+  --background: oklch(0.17 0.008 80);
+  --foreground: oklch(0.94 0.008 90);
+  --card: oklch(0.205 0.008 80);
+  --card-foreground: oklch(0.94 0.008 90);
+  --popover: oklch(0.205 0.008 80);
+  --popover-foreground: oklch(0.94 0.008 90);
+  --primary: oklch(0.91 0.012 90);
+  --primary-foreground: oklch(0.19 0.008 80);
+  --secondary: oklch(0.25 0.008 80);
+  --secondary-foreground: oklch(0.91 0.012 90);
+  --muted: oklch(0.25 0.008 80);
+  --muted-foreground: oklch(0.72 0.012 85);
+  --accent: oklch(0.28 0.008 80);
+  --accent-foreground: oklch(0.94 0.008 90);
+  --destructive: oklch(0.68 0.17 27);
+  --border: oklch(0.34 0.009 80);
+  --input: oklch(0.34 0.009 80);
+  --ring: oklch(0.75 0.035 80);
+  --code: oklch(0.21 0.006 285.885);
+  --code-foreground: oklch(0.985 0 0);
 }
 
 * { box-sizing: border-box; }
@@ -62,6 +92,8 @@ html { scroll-behavior: smooth; }
 body { margin: 0; min-height: 100vh; background: var(--background); color: var(--foreground); }
 a { color: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+.theme-changing *, .theme-changing *::before, .theme-changing *::after { transition: none !important; }
 
 @layer base {
   * { @apply border-border outline-ring/50; }
@@ -90,6 +122,37 @@ button, a { -webkit-tap-highlight-color: transparent; }
   margin-inline: auto;
 }
 .site-brand-group { display: flex; min-width: 0; align-items: center; gap: 18px; }
+.theme-toggle { display: inline-grid; width: 44px; height: 44px; flex: 0 0 auto; place-items: center; border: 1px solid var(--border); border-radius: 999px; background: var(--card); color: var(--foreground); cursor: pointer; transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease; }
+.theme-toggle svg { width: 18px; height: 18px; stroke-width: 1.8; }
+.theme-icon-moon { display: none; }
+.dark .theme-icon-sun { display: none; }
+.dark .theme-icon-moon { display: block; }
+/* Keep the touch target independent of the icon's optical size. */
+.docs-site [data-theme-toggle] { height: auto; padding: 3px; border-radius: 14px; }
+.docs-site [data-theme-toggle] > button { display: inline-grid; width: 44px; height: 44px; padding: 0; place-items: center; border-radius: 10px; }
+.docs-site [data-theme-toggle] > button > svg { width: 18px; height: 18px; fill: none; stroke-width: 1.8; }
+.docs-site button:is([aria-label="Open Search"], [aria-label="Open Sidebar"]) { width: 44px; height: 44px; border-radius: 10px; }
+.docs-site button:is([aria-label="Open Search"], [aria-label="Open Sidebar"]) svg { width: 18px; height: 18px; stroke-width: 1.8; }
+.docs-site [aria-label="GitHub"] svg { width: 18px; height: 18px; }
+.docs-site .lucide-languages { width: 18px; height: 18px; stroke-width: 1.8; }
+.docs-theme-switch { display: flex; flex: 0 0 auto; gap: 2px; margin-inline-start: 4px; padding: 3px; border: 1px solid var(--border); border-radius: 11px; background: var(--card); }
+.docs-theme-switch button { display: inline-grid; width: 32px; height: 32px; padding: 0; place-items: center; border: 0; border-radius: 8px; background: transparent; color: var(--muted-foreground); cursor: pointer; transition: background-color 150ms ease, color 150ms ease; }
+.docs-theme-switch button svg { width: 16px; height: 16px; stroke-width: 1.8; }
+.docs-theme-switch button[aria-pressed="true"] { background: var(--muted); color: var(--foreground); }
+@media (hover: hover) and (pointer: fine) {
+  .docs-theme-switch button:hover { background: var(--muted); color: var(--foreground); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .docs-theme-switch button:active { scale: .96; }
+}
+.docs-code-header { display: flex; height: 48px; align-items: center; gap: 8px; padding: 0 52px 0 12px; border-bottom: 1px solid var(--border); color: var(--muted-foreground); font: 500 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+.docs-code-header svg { width: 16px; height: 16px; flex-shrink: 0; }
+.docs-code-tabs { display: block; padding-left: 0; }
+.docs-code .docs-code-pre { display: block; width: 100%; margin: 0; padding: 16px; overflow: auto; overscroll-behavior-x: contain; border: 0; border-radius: 0; background: transparent !important; color: var(--code-foreground); font: 400 14px/24px ui-monospace, SFMono-Regular, Menlo, monospace; tab-size: 2; }
+.docs-code .docs-code-pre code { display: block; padding: 0; border: 0; background: transparent; font: inherit; }
+.docs-code .docs-code-pre.shiki span { color: var(--shiki-light); }
+.dark .docs-code .docs-code-pre.shiki span { color: var(--shiki-dark); }
+.docs-code .docs-code-pre:focus-visible { outline-offset: -3px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
 .brand-mark { display: grid; width: 32px; height: 32px; place-items: center; border-radius: 10px; background: #24231f; color: #fff; }
 .brand-mark svg { width: 22px; height: 22px; }
@@ -203,6 +266,37 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 .hero-primary:active, .hero-secondary:active, .nav-cta:active, .closing-primary:active, .closing-secondary:active { transform: scale(.98); }
 
+/* Shared dark palette for the marketing and playground surfaces. */
+.dark .site-header { border-color: var(--border); background: color-mix(in oklab, var(--background) 88%, transparent); }
+.dark .brand-name, .dark .section-heading h2, .dark .closing-panel h2 { color: var(--foreground); }
+.dark .brand-name span, .dark .hero-copy h1 span, .dark .section-heading h2 span { color: var(--muted-foreground); }
+.dark .brand-mark { background: var(--foreground); color: var(--background); }
+.dark .github-stars { border-color: var(--border); background: var(--card); color: var(--foreground); }
+.dark .github-stars-divider { background: var(--border); }
+.dark .desktop-nav > a:not(.nav-cta) { color: var(--muted-foreground); }
+.dark .nav-cta, .dark .hero-primary, .dark .closing-primary, .dark .playground button { background: var(--primary) !important; color: var(--primary-foreground) !important; }
+.dark .desktop-nav > a:not(.nav-cta):hover, .dark .github-stars:hover, .dark .theme-toggle:hover { border-color: var(--ring); background: var(--accent); color: var(--accent-foreground); }
+.dark .mobile-nav summary, .dark .mobile-nav-panel { border-color: var(--border); background: var(--card); color: var(--foreground); }
+.dark .mobile-nav-panel a { color: var(--foreground); }
+.dark .hero-badge { border-color: var(--border) !important; background: var(--secondary) !important; color: var(--secondary-foreground) !important; }
+.dark .hero-copy h1, .dark .feature-card-title { color: var(--foreground); }
+.dark .hero-description, .dark .section-description, .dark .closing-panel > div:first-child > p:last-child { color: var(--muted-foreground); }
+.dark .hero-trust, .dark .hero-trust svg, .dark .section-eyebrow, .dark .feature-number { color: var(--muted-foreground); }
+.dark .hero-secondary, .dark .closing-secondary { border-color: var(--border) !important; color: var(--foreground) !important; }
+.dark .visual-note { border-color: var(--border); background: color-mix(in oklab, var(--card) 94%, transparent); color: var(--muted-foreground); }
+.dark .visual-note strong { color: var(--foreground); }
+.dark .visual-note-icon, .dark .feature-icon { border-color: var(--border); background: var(--secondary); color: var(--foreground); }
+.dark .features-section, .dark .site-footer { border-color: var(--border); }
+.dark .feature-card { background: var(--card) !important; box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--border) 70%, transparent) !important; }
+.dark .feature-card-description, .dark .site-footer { color: var(--muted-foreground) !important; }
+.dark .closing-panel { border-color: var(--border); background: var(--card); }
+.dark .footer-brand, .dark .site-footer > a:last-child { color: var(--foreground); }
+.dark .app-shell > p { color: var(--muted-foreground); }
+.dark .playground { border-color: var(--border); background: var(--card); }
+.dark .playground textarea, .dark .playground input { border-color: var(--input); background: var(--background); color: var(--foreground); }
+.dark .playground pre { background: var(--secondary); color: var(--foreground); }
+.dark .playground [role="alert"] { color: oklch(0.78 0.13 27); }
+
 @media (max-width: 860px) {
   .hero-section { grid-template-columns: minmax(0, 1fr) minmax(320px, .9fr); gap: 34px; }
   .hero-copy h1 { font-size: clamp(3rem, 6.8vw, 4.6rem); }
@@ -215,6 +309,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .site-header-inner { width: min(100% - 2rem, 560px); height: 64px; }
   .site-brand-group { gap: 11px; }
   .desktop-nav { display: none; }
+  .theme-toggle { margin-left: auto; margin-right: 10px; }
   .mobile-nav { display: block; }
   .hero-section { min-height: auto; grid-template-columns: 1fr; gap: 44px; padding-block: 58px 75px; }
   .hero-copy h1 { margin-top: 22px; font-size: clamp(3.2rem, 12vw, 4.7rem); }
@@ -249,5 +344,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
 @media (prefers-reduced-transparency: reduce) {
-  .site-header { background: #f7f6f2; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .site-header { background: var(--background); backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+@media (forced-colors: active) {
+  :focus-visible { outline-color: Highlight; }
 }

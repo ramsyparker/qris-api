@@ -1,0 +1,42 @@
+---
+title: decode
+description: Read QR code text from an image file.
+---
+
+# `decode()`
+
+`decode()` uploads an image as `multipart/form-data` and returns the detected QR code text.
+
+## Browser
+
+```ts
+const file = fileInput.files?.[0];
+if (!file) throw new Error('Select an image first.');
+
+const result = await api.decode(file, file.name);
+console.log(result.text);
+```
+
+In browsers, `File` extends `Blob` and can be passed directly to `decode()`.
+
+## Node.js or Bun
+
+```ts
+import { readFile } from 'node:fs/promises';
+
+const bytes = await readFile('./qris.png');
+const image = new Blob([bytes], { type: 'image/png' });
+const result = await api.decode(image, 'qris.png');
+```
+
+### Signature
+
+```ts
+decode(image: Blob, filename?: string): Promise<{ text: string }>
+```
+
+The SDK sends the file in the `image` field of `FormData`. For direct HTTP requests, let the runtime set `Content-Type` so it includes the multipart boundary.
+
+<Callout type="warn">
+If no QR code is detected, the server returns HTTP `400`. Use a clear image with the entire QR code visible.
+</Callout>

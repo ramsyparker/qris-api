@@ -1,0 +1,42 @@
+---
+title: decode
+description: Baca teks kode QR dari file gambar.
+---
+
+# `decode()`
+
+Metode `decode()` mengunggah gambar melalui `multipart/form-data` dan mengembalikan teks kode QR yang terbaca.
+
+## Browser
+
+```ts
+const file = fileInput.files?.[0];
+if (!file) throw new Error('Pilih gambar terlebih dahulu.');
+
+const result = await api.decode(file, file.name);
+console.log(result.text);
+```
+
+Di browser, `File` merupakan turunan `Blob` dan dapat diberikan langsung ke `decode()`.
+
+## Node.js atau Bun
+
+```ts
+import { readFile } from 'node:fs/promises';
+
+const bytes = await readFile('./qris.png');
+const image = new Blob([bytes], { type: 'image/png' });
+const result = await api.decode(image, 'qris.png');
+```
+
+### Signature
+
+```ts
+decode(image: Blob, filename?: string): Promise<{ text: string }>
+```
+
+SDK mengirim file pada field `image` dalam `FormData`. Jika memanggil endpoint secara langsung, biarkan runtime menentukan header `Content-Type` agar multipart boundary ikut terkirim.
+
+<Callout type="warn">
+Jika kode QR tidak terdeteksi, server mengembalikan HTTP `400`. Gunakan gambar yang jelas dan pastikan seluruh kode QR terlihat.
+</Callout>

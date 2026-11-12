@@ -1,0 +1,42 @@
+---
+title: Browser integration
+description: Use the SDK in a browser and configure CORS access.
+---
+
+# Browser integration
+
+Use the SDK in a browser app that supports ESM. The public API server allows cross-origin requests without cookies.
+
+```ts
+import { QrisApi, QrisApiError } from '@aaramsyy/qris-api';
+
+const api = new QrisApi();
+try {
+  const result = await api.convert({ qris, nominal });
+  output.textContent = result.qris;
+} catch (error) {
+  if (error instanceof QrisApiError) {
+    output.textContent = `${error.status}: ${error.message}`;
+  }
+}
+```
+
+In this example, `qris` is a valid payload, `nominal` is a string of 1–13 digits, and `output` is a DOM element in your app.
+
+## Read a QR code from an image
+
+```ts
+const image = imageInput.files?.[0];
+if (!image) throw new Error('Select an image file.');
+
+const { text } = await api.decode(image, image.name);
+console.log(text);
+```
+
+## Your own API server
+
+If the API server uses another domain, configure CORS to allow your application's origin. The server configuration in this repository does not use CORS credentials.
+
+<Callout type="info">
+Browsers enforce CORS; Node.js and Bun do not. If a browser blocks a request, check the API server's CORS configuration.
+</Callout>

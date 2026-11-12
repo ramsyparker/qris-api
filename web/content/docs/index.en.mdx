@@ -1,0 +1,43 @@
+---
+title: Introduction
+description: Explore QRIS API features and choose an integration method.
+---
+
+# QRIS API
+
+QRIS API updates transaction amounts in QRIS payloads, reads QR codes from images, and generates QR images. The JavaScript and TypeScript SDK, `@aaramsyy/qris-api`, provides methods for all three operations.
+
+```ts
+import { QrisApi } from '@aaramsyy/qris-api';
+
+const api = new QrisApi();
+const result = await api.convert({ qris: '<VALID_QRIS>', nominal: '10000' });
+console.log(result.qris);
+console.log(result.merchantName);
+```
+
+Replace `<VALID_QRIS>` with a valid QRIS payload before running the example.
+
+<Callout type="info">
+The SDK uses `https://qris.fixorastudio.com` by default. Set [`baseUrl`](/en/docs/configuration) to use your own server.
+</Callout>
+
+## Choose an integration method
+
+| Goal | Guide |
+| --- | --- |
+| Install the SDK | [Installation](/en/docs/installation) |
+| Make your first request | [Quickstart](/en/docs/quickstart) |
+| Update a QRIS amount | [Convert](/en/docs/api/convert) |
+| Read a QR code from an image | [Decode](/en/docs/api/decode) |
+| Generate a QR image | [QR](/en/docs/api/qr) |
+| Call endpoints without the SDK | [REST API](/en/docs/rest-api) |
+
+## Features
+
+- **Convert:** Update the transaction amount and CRC16 in a QRIS payload.
+- **Decode:** Extract QR code text from an image.
+- **Generate:** Return a PNG image as a `Blob`.
+- **TypeScript types:** Use the included input and result types.
+
+Start with [installation](/en/docs/installation), then follow the [quickstart](/en/docs/quickstart).

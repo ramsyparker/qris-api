@@ -1,5 +1,5 @@
 ---
-import { Star, Menu, X, ArrowUpRight } from 'lucide-react';
+import { Star, Menu, X, ArrowUpRight, Sun, Moon } from 'lucide-react';
 import { GithubLight } from '@/components/ui/svgs/githubLight';
 import { LinkButton } from '@/components/LinkButton';
 
@@ -49,6 +49,11 @@ const githubUrl = `https://github.com/${repository}`;
       </a>
     </div>
 
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Aktifkan mode gelap" title="Aktifkan mode gelap">
+      <Sun className="theme-icon theme-icon-sun" aria-hidden="true" />
+      <Moon className="theme-icon theme-icon-moon" aria-hidden="true" />
+    </button>
+
     <nav class="desktop-nav" aria-label="Navigasi utama">
       <a href="/docs/">Dokumentasi</a>
       <a href="/api-reference/">API reference <ArrowUpRight aria-hidden="true" /></a>
@@ -68,3 +73,41 @@ const githubUrl = `https://github.com/${repository}`;
     </details>
   </div>
 </header>
+
+<script is:inline>
+  (() => {
+    const root = document.documentElement;
+    const buttons = document.querySelectorAll('[data-theme-toggle]');
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const applyTheme = (choice) => {
+      const resolved = choice === 'system' ? (media.matches ? 'dark' : 'light') : choice;
+      root.classList.add('theme-changing');
+      root.classList.toggle('dark', resolved === 'dark');
+      root.classList.toggle('light', resolved === 'light');
+      root.style.colorScheme = resolved;
+      void root.offsetHeight;
+      requestAnimationFrame(() => root.classList.remove('theme-changing'));
+      buttons.forEach((button) => {
+        const label = resolved === 'dark' ? 'Aktifkan mode terang' : 'Aktifkan mode gelap';
+        button.setAttribute('aria-label', label);
+        button.setAttribute('title', label);
+      });
+    };
+
+    let choice = localStorage.getItem('theme') || 'system';
+    applyTheme(choice);
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        choice = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+        localStorage.setItem('theme', choice);
+        applyTheme(choice);
+      });
+    });
+
+    media.addEventListener('change', () => {
+      if (choice === 'system') applyTheme('system');
+    });
+  })();
+</script>

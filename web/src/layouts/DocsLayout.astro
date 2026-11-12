@@ -1,0 +1,25 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  locale?: 'id' | 'en';
+}
+
+const { title, description, locale = 'id' } = Astro.props;
+---
+
+<html lang={locale} transition:animate="none">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description ?? (locale === 'en' ? 'QRIS API documentation.' : 'Dokumentasi QRIS API.')} />
+    <title>{title} — QRIS API</title>
+    <ClientRouter />
+  </head>
+  <body class="docs-site">
+    <slot />
+  </body>
+</html>

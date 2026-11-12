@@ -1,0 +1,66 @@
+---
+title: API REST
+description: Panggil endpoint secara langsung tanpa SDK JavaScript.
+---
+
+# API REST
+
+Alamat server publik: `https://qris.fixorastudio.com`. Ganti alamat ini jika kamu menjalankan server sendiri. Ganti `<QRIS_VALID>` pada contoh dengan payload QRIS yang valid.
+
+## `POST /convert`
+
+```bash
+curl -X POST https://qris.fixorastudio.com/convert \
+  -H 'Content-Type: application/json' \
+  -d '{"qris":"<QRIS_VALID>","nominal":"10000"}'
+```
+
+Contoh respons berhasil:
+
+```json
+{
+  "qris": "<QRIS_HASIL_KONVERSI>",
+  "nominal": "10000",
+  "merchantName": "Nama Merchant"
+}
+```
+
+## `GET /convert`
+
+Endpoint ini juga menerima permintaan GET. Gunakan pengodean parameter query agar karakter dalam payload QRIS tidak mengubah struktur URL.
+
+```bash
+curl -G 'https://qris.fixorastudio.com/convert' \
+  --data-urlencode 'qris=<QRIS_VALID>' \
+  --data-urlencode 'nominal=10000'
+```
+
+## `POST /decode`
+
+Kirim file gambar dalam field multipart `image`:
+
+```bash
+curl -X POST https://qris.fixorastudio.com/decode \
+  -F 'image=@./qris.png'
+```
+
+Respons berhasil berbentuk `{ "text": "<PAYLOAD_QRIS>" }`.
+
+## `GET /qr`
+
+Buat PNG dari teks:
+
+```bash
+curl 'https://qris.fixorastudio.com/qr?text=contoh' --output qr.png
+```
+
+Atau buat PNG dari QRIS dengan nominal baru:
+
+```bash
+curl -G 'https://qris.fixorastudio.com/qr' \
+  --data-urlencode 'qris=<QRIS_VALID>' \
+  --data-urlencode 'nominal=10000' \
+  --output qr.png
+```
+
+Dokumentasi OpenAPI interaktif tersedia di [`/api-reference`](https://qris.fixorastudio.com/api-reference).

@@ -1,0 +1,37 @@
+---
+title: Configuration
+description: Set the API server URL and provide a custom fetch implementation.
+---
+
+# Configuration
+
+## API server URL
+
+By default, the SDK sends requests to `https://qris.fixorastudio.com`.
+
+```ts
+import { QrisApi } from '@aaramsyy/qris-api';
+
+const api = new QrisApi({ baseUrl: 'https://qr.example.com' });
+```
+
+For local development, use `new QrisApi({ baseUrl: 'http://localhost:3000' })`.
+
+`baseUrl` must be an absolute URL. The SDK removes trailing slashes.
+
+## Custom fetch
+
+Pass a compatible implementation when your runtime provides its own Fetch API:
+
+```ts
+const api = new QrisApi({
+  baseUrl: 'https://qr.example.com',
+  fetch: customFetch,
+});
+```
+
+The function must accept a URL and `RequestInit`, then return `Promise<Response>`.
+
+## Runtime
+
+The SDK requires `fetch`, `Blob`, and `FormData`. Use Node.js 18+, Bun, or a modern browser. For browser use, the API server must allow your application's origin through CORS.

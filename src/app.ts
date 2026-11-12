@@ -1,4 +1,5 @@
 import { Elysia, t } from 'elysia';
+import { cors } from '@elysia/cors';
 import { swagger } from '@elysiajs/swagger';
 import QRCode from 'qrcode';
 import { Jimp } from 'jimp';
@@ -11,6 +12,13 @@ import { join } from 'path';
 import { redisRateLimit } from './utils/redis.util';
 
 const app = new Elysia();
+
+app.use(cors({
+    origin: true,
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type'],
+    credentials: false
+}));
 
 
 const qrisController = new QrisController();
@@ -179,7 +187,7 @@ app.get('/qr', async ({ query }) => {
     }
     try {
         const pngBuffer = await QRCode.toBuffer(content, { type: 'png', errorCorrectionLevel: 'M' });
-        return new Response(pngBuffer, { headers: { 'content-type': 'image/png' } });
+        return new Response(new Uint8Array(pngBuffer), { headers: { 'content-type': 'image/png' } });
     } catch (e: any) {
         return new Response(JSON.stringify({ error: e?.message || 'Gagal membuat QR' }), {
             status: 500,

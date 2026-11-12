@@ -1,4 +1,6 @@
 node_modules
 .env
 dist
+.compat/
+.playwright-cli/
 .astro

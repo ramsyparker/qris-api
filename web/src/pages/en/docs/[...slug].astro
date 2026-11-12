@@ -1,0 +1,33 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+import { DocsIsland } from '../../../components/DocsIsland';
+import { source } from '../../../lib/source';
+
+export const prerender = true;
+
+export const getStaticPaths = (() => source.getPages('en').map((page) => ({
+  params: { slug: decodeURI(page.slugs.join('/')) || undefined },
+  props: { page },
+}))) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { page } = Astro.props;
+const { body: Content, toc } = await page.data.load();
+const tree = await source.serializePageTree(source.getPageTree('en'));
+---
+
+<DocsLayout title={page.data.title} description={page.data.description} locale="en">
+  <DocsIsland
+    client:load
+    pathname={Astro.url.pathname}
+    params={Astro.params}
+    tree={tree}
+    title={page.data.title}
+    description={page.data.description}
+    toc={toc}
+    locale="en"
+  >
+    <Content />
+  </DocsIsland>
+</DocsLayout>
