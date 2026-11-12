@@ -4,7 +4,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "worker:dev": "bun run build && bunx wrangler dev",
+    "worker:deploy": "bun run build && bunx wrangler deploy"
   },
   "dependencies": {
     "@astrojs/react": "^7.1.7",

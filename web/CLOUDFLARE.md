@@ -6,8 +6,7 @@ The Astro build produces static assets in `dist/`. Wrangler serves those assets 
 
 ```sh
 bun install
-bun run build
-bunx wrangler dev
+bun run worker:dev
 ```
 
 ## Deploy
@@ -15,8 +14,7 @@ bunx wrangler dev
 Authenticate Wrangler with `bunx wrangler login`, then run:
 
 ```sh
-bun run build
-bunx wrangler deploy
+bun run worker:deploy
 ```
 
 The first deployment is available at the `workers.dev` address printed by Wrangler. The existing `qris.fixorastudio.com` hostname currently serves the API, so keep the web Worker on its `workers.dev` hostname until a separate web hostname and DNS route are configured.
