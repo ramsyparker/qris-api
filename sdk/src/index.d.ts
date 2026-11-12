@@ -1,5 +1,5 @@
 export interface QrisApiOptions {
-  /** API origin. Defaults to https://qris.fixorastudio.com. */
+  /** API origin. Defaults to https://api-qris.fixorastudio.com. */
   baseUrl?: string;
   /** Optional fetch implementation, useful for custom runtimes and testing. */
   fetch?: typeof globalThis.fetch;

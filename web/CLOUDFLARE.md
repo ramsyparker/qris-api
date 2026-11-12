@@ -17,6 +17,6 @@ Authenticate Wrangler with `bunx wrangler login`, then run:
 bun run worker:deploy
 ```
 
-The first deployment is available at the `workers.dev` address printed by Wrangler. The existing `qris.fixorastudio.com` hostname currently serves the API, so keep the web Worker on its `workers.dev` hostname until a separate web hostname and DNS route are configured.
+The Worker is configured for `qris.fixorastudio.com`. The existing API and its Nginx server use `api-qris.fixorastudio.com`. Wrangler provisions the web custom domain during deployment when the domain is active in the Cloudflare account.
 
 To use another API server, update `API_ORIGIN` in `wrangler.toml` before deployment.

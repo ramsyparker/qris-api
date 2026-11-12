@@ -18,24 +18,24 @@ mkdir -p /var/www/html
 
 # 2. Pasang Konfigurasi Bootstrap (Hanya Port 80)
 echo "Memasang konfigurasi bootstrap Nginx..."
-cp nginx-bootstrap.conf /etc/nginx/sites-available/qris.fixorastudio.com
-ln -sf /etc/nginx/sites-available/qris.fixorastudio.com /etc/nginx/sites-enabled/
+cp nginx-bootstrap.conf /etc/nginx/sites-available/api-qris.fixorastudio.com
+ln -sf /etc/nginx/sites-available/api-qris.fixorastudio.com /etc/nginx/sites-enabled/
 nginx -t && systemctl restart nginx
 
 # 3. Generate SSL Certificate menggunakan metode webroot
-echo "Menghasilkan sertifikat SSL untuk qris.fixorastudio.com via webroot..."
-certbot certonly --webroot -w /var/www/html -d qris.fixorastudio.com --non-interactive --agree-tos --register-unsafely-without-email
+echo "Menghasilkan sertifikat SSL untuk api-qris.fixorastudio.com via webroot..."
+certbot certonly --webroot -w /var/www/html -d api-qris.fixorastudio.com --non-interactive --agree-tos --register-unsafely-without-email
 
 # Cek apakah sertifikat berhasil di-generate
-if [ ! -f /etc/letsencrypt/live/qris.fixorastudio.com/fullchain.pem ]; then
+if [ ! -f /etc/letsencrypt/live/api-qris.fixorastudio.com/fullchain.pem ]; then
     echo "Gagal menghasilkan sertifikat SSL. Silakan cek koneksi atau apakah domain sudah mengarah ke IP server ini."
     exit 1
 fi
 
 # 4. Pasang Konfigurasi Final (HTTPS)
 echo "Mengatur konfigurasi Nginx Final (HTTPS)..."
-cp nginx.conf /etc/nginx/sites-available/qris.fixorastudio.com
+cp nginx.conf /etc/nginx/sites-available/api-qris.fixorastudio.com
 nginx -t && systemctl restart nginx
 
 echo "SSL Berhasil di-generate dan Nginx telah di-restart dengan HTTPS!"
-echo "Aplikasi Anda sekarang aktif di https://qris.fixorastudio.com"
+echo "Aplikasi Anda sekarang aktif di https://api-qris.fixorastudio.com"

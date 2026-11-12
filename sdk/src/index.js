@@ -1,4 +1,4 @@
-const DEFAULT_BASE_URL = 'https://qris.fixorastudio.com';
+const DEFAULT_BASE_URL = 'https://api-qris.fixorastudio.com';
 
 export class QrisApiError extends Error {
   constructor(message, { status, body }) {

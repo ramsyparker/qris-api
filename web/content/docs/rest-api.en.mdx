@@ -5,12 +5,12 @@ description: Call the endpoints directly without the JavaScript SDK.
 
 # REST API
 
-Public server URL: `https://qris.fixorastudio.com`. Replace it if you run your own server. Replace `<VALID_QRIS>` in the examples with a valid QRIS payload.
+Public server URL: `https://api-qris.fixorastudio.com`. Replace it if you run your own server. Replace `<VALID_QRIS>` in the examples with a valid QRIS payload.
 
 ## `POST /convert`
 
 ```bash
-curl -X POST https://qris.fixorastudio.com/convert \
+curl -X POST https://api-qris.fixorastudio.com/convert \
   -H 'Content-Type: application/json' \
   -d '{"qris":"<VALID_QRIS>","nominal":"10000"}'
 ```
@@ -26,7 +26,7 @@ Example successful response:
 This endpoint also accepts GET. URL-encode query parameters so characters in the payload do not alter the URL.
 
 ```bash
-curl -G 'https://qris.fixorastudio.com/convert' \
+curl -G 'https://api-qris.fixorastudio.com/convert' \
   --data-urlencode 'qris=<VALID_QRIS>' \
   --data-urlencode 'nominal=10000'
 ```
@@ -36,7 +36,7 @@ curl -G 'https://qris.fixorastudio.com/convert' \
 Send an image in the multipart `image` field:
 
 ```bash
-curl -X POST https://qris.fixorastudio.com/decode -F 'image=@./qris.png'
+curl -X POST https://api-qris.fixorastudio.com/decode -F 'image=@./qris.png'
 ```
 
 A successful response has the form `{ "text": "<QR_TEXT>" }`.
@@ -46,16 +46,16 @@ A successful response has the form `{ "text": "<QR_TEXT>" }`.
 Generate a PNG from text:
 
 ```bash
-curl 'https://qris.fixorastudio.com/qr?text=example' --output qr.png
+curl 'https://api-qris.fixorastudio.com/qr?text=example' --output qr.png
 ```
 
 Or generate a PNG from a QRIS payload with a new amount:
 
 ```bash
-curl -G 'https://qris.fixorastudio.com/qr' \
+curl -G 'https://api-qris.fixorastudio.com/qr' \
   --data-urlencode 'qris=<VALID_QRIS>' \
   --data-urlencode 'nominal=10000' \
   --output qr.png
 ```
 
-Interactive OpenAPI documentation is available at [`/api-reference`](https://qris.fixorastudio.com/api-reference).
+Interactive OpenAPI documentation is available at [`/api-reference`](https://api-qris.fixorastudio.com/api-reference).
